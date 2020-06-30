@@ -1,4 +1,4 @@
-
+//test
 import java.util.Scanner;
 
 public class Cubes {
