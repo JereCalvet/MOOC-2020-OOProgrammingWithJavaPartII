@@ -10,6 +10,29 @@ public class SimpleDate {
         this.month = month;
         this.year = year;
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (this == null || object == null ) {
+            return false;
+        }
+        
+        if (this == object) {
+            return true;
+        }
+        
+        if (this.getClass() != object.getClass()) {
+            return false;
+        }
+        
+        SimpleDate compared = (SimpleDate) object;
+        
+        if (this.day == compared.day && this.month == compared.month && this.year == compared.year) {
+            return true;
+        }
+        
+        return false;
+    }
 
     @Override
     public String toString() {
