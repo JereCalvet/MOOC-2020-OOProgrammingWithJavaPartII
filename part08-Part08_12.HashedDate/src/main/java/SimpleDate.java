@@ -12,6 +12,39 @@ public class SimpleDate {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.day;
+        hash = 41 * hash + this.month;
+        hash = 41 * hash + this.year;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SimpleDate other = (SimpleDate) obj;
+        if (this.day != other.day) {
+            return false;
+        }
+        if (this.month != other.month) {
+            return false;
+        }
+        if (this.year != other.year) {
+            return false;
+        }
+        return true;
+    }
+ 
+    @Override
     public String toString() {
         return this.day + "." + this.month + "." + this.year;
     }
