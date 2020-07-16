@@ -15,8 +15,9 @@ public class ShoppingCart {
     }
 
     public void add(String product, int price) {
-        Item tempItem = new Item(product, price, 1);
+        Item tempItem = new Item(product, 1, price);
         if (items.contains(tempItem)) {
+            tempItem = items.get(items.indexOf(tempItem));
             tempItem.increaseQuantity();
         } else {
             items.add(tempItem);

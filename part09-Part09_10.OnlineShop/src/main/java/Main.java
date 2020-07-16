@@ -8,7 +8,10 @@ public class Main {
         cart.add("buttermilk", 2);
         cart.add("cheese", 5);
         cart.add("computer", 899);
-
+        cart.add("milk", 4);
+        
         cart.print();
+        System.out.println("");
+        System.out.println(cart.price());
     }
 }
