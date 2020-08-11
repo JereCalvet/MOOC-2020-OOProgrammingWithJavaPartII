@@ -47,3 +47,16 @@
 /part11-Part11_03.ShowAndTicket/target/
 /part11-Part11_04.StudentAndUniversity/target/
 /part11-Part11_05.ThePlayerAndTheBot/target/
+/part11-Part11_06.SaveablePerson/target/
+/part11-Part11_07.BiggerClassDiagram/target/
+/part11-Part11_08.FirstPackages/target/
+/part11-Part11_09.TheThreePackages/target/
+/part11-Part11_10.FlightControl/target/
+/part11-Part11_11.ValidatingParameters/target/
+/part11-Part11_12.SensorsAndTemperature/target/
+/part11-Part11_13.SaveableDictionary/target/
+*.txt
+/part12-Part12_01.Hideout/target/
+/part12-Part12_02.Pipe/target/
+/part12-Part12_03.SumTheseForMe/target/
+/part12-Part12_04.List/target/
