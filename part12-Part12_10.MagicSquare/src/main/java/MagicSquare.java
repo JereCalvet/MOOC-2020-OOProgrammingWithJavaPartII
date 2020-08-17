@@ -40,8 +40,31 @@ public class MagicSquare {
         return sumsOfColumns;
     }
 
+    private int sumFirstDiagonalFromLeftToRight() {
+        int sum = 0;
+        for (int i = 0; i < square.length; i++) {
+            sum += square[i][i];
+        }
+        return sum;
+    }
+    
+    private int sumSecondDiagonalFromRightToLeft() {
+        int sum = 0;
+        for (int row = 0; row < square.length; row++) {
+            int tempLimit = square[row].length - 1;
+            for (int col = tempLimit; col >= 0; col--) {
+                if (Math.abs(tempLimit - col) == row) {
+                    sum += square[row][col]; 
+                }
+            }
+        }
+        return sum;
+    }
+    
     public ArrayList<Integer> sumsOfDiagonals() {
         ArrayList<Integer> sumsOfDiagonals = new ArrayList<>();
+        sumsOfDiagonals.add(sumFirstDiagonalFromLeftToRight());
+        sumsOfDiagonals.add(sumSecondDiagonalFromRightToLeft());
         return sumsOfDiagonals;
     }
     
