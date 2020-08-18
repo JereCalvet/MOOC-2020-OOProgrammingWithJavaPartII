@@ -49,6 +49,11 @@ public class MagicSquare {
     }
     
     private int sumSecondDiagonalFromRightToLeft() {
+        /* Metodo propuesto: es mas efectivo
+        for (int y = 0; y < square.length; y++) {
+            sum += square[square.length - y - 1][y];
+        }
+        */
         int sum = 0;
         for (int row = 0; row < square.length; row++) {
             int tempLimit = square[row].length - 1;

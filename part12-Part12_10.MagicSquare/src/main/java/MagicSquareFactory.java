@@ -36,7 +36,7 @@ public class MagicSquareFactory {
         if (isOdd(size)) {
             MagicSquare square = new MagicSquare(size);
             int amountOfNumbersNeeded = calculateAmountOfNumbersToPlace(square.getWidth());
-            int x = calculateCenterMostCell(square.getWidth());
+            int x = calculateCenterMostCell(square.getWidth() - 1);
             int y = 0;
             int amountOfPlacedNumbers = 1;
             square.placeValue(x, y, amountOfPlacedNumbers);
