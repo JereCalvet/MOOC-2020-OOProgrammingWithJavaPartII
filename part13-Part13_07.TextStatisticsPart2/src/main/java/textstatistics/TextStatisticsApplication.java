@@ -19,43 +19,53 @@ public class TextStatisticsApplication extends Application {
     public static void main(String[] args) {
         launch(TextStatisticsApplication.class);
     }
-    
-    private HBox statisticsOutputLayout() {
-        HBox boxLayout = new HBox();
-        boxLayout.getChildren().add(new Label("Letters: 0"));
-        boxLayout.getChildren().add(new Label("Words: 0"));
-        boxLayout.getChildren().add(new Label("The longest word is:"));
-        boxLayout.setSpacing(10);
-        
-        return boxLayout;
-    }
-    
-    private TextArea addChangeListener(TextArea textAreaComponentToChange) {
-        textAreaComponentToChange.textProperty().addListener((change, oldValue, NewValue) -> {
-            updateGUILabels(NewValue);
-        });
-        return textAreaComponentToChange;
-    }
-    
-    private BorderPane createComponents() {
-        BorderPane layout = new BorderPane();
-        TextArea inputText = new TextArea();
-        addChangeListener(inputText);
-        layout.setCenter(inputText);
-        layout.setBottom(statisticsOutputLayout());
-        
-        return layout;
-    }
-    
-    private void updateGUILabels(String textToProcess) {
+   
+    private void updateGUILabels(String textToProcess, Label labelLetters, Label labelWords, Label labelLongestWord) {
         logic.setText(textToProcess);
-        
+        labelLetters.setText("Letters: " + logic.getAmountOfCharacters());
+        labelWords.setText("Words: " + logic.getAmountOfWords());
+        labelLongestWord.setText("The longest word is: " + logic.getLongestWord());
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        HBox boxLayout = new HBox();
+        Label labelLetters = new Label("Letters: " + logic.getAmountOfCharacters());
+        Label labelWords = new Label("Words: " + logic.getAmountOfWords());
+        Label labelLongestWord = new Label("The longest word is: " + logic.getLongestWord());
+        boxLayout.getChildren().add(labelLetters);
+        boxLayout.getChildren().add(labelWords);
+        boxLayout.getChildren().add(labelLongestWord);
+        boxLayout.setSpacing(10);
+               
+        BorderPane layout = new BorderPane();
+        TextArea inputText = new TextArea();
+        inputText.textProperty().addListener((change, oldValue, NewValue) -> {
+            updateGUILabels(NewValue, labelLetters, labelWords, labelLongestWord);
+        });
+        
+        /*
+        Respuesta propuesta:
+        textBox.textProperty().addListener((change, oldValue, newValue) -> {
+            int characters = newValue.length();
+            String[] parts = newValue.split(" ");
+            int words = parts.length;
+            String longest = Arrays.stream(parts)
+                    .sorted((s1, s2) -> s2.length() - s1.length())
+                    .findFirst()
+                    .get();
+ 
+            lettersLabel.setText("Letters: " + characters);
+            wordsLabel.setText("Words: " + words);
+            longestWordLabel.setText("The longest word is: " + longest);
+        });
+        */
+        
+        layout.setCenter(inputText);
+        layout.setBottom(boxLayout);
+         
         stage.setTitle("Text statistics application");
-        stage.setScene(new Scene(createComponents()));
+        stage.setScene(new Scene(layout));
         stage.show();
     }
 }

@@ -31,9 +31,9 @@ public class TextStatisticsLogic {
     }
 
     public int getAmountOfWords() {
-//        if (text.isEmpty()) {
-//            return 0;
-//        }
+        if (text.isEmpty()) {
+            return 0;
+        }
         return splitText().length;
     }
 
@@ -42,9 +42,6 @@ public class TextStatisticsLogic {
     }
 
     public int getAmountOfCharacters() {
-//        if (text.isEmpty()) {
-//            return 0;
-//        }
         return text.length();
     }
 }
