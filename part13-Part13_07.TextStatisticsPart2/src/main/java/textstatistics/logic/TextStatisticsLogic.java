@@ -1,4 +1,4 @@
-package textstatistics;
+package textstatistics.logic;
 
 import java.util.Arrays;
 
