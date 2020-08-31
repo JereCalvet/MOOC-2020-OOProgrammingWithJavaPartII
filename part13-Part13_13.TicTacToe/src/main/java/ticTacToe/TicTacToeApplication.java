@@ -1,11 +1,11 @@
 package ticTacToe;
 
 import javafx.application.Application;
-import ticTacToe.userinterface.mainWindow;
+import ticTacToe.userinterface.MainWindow;
 
 public class TicTacToeApplication {
 
     public static void main(String[] args) {
-        Application.launch(mainWindow.class);
+        Application.launch(MainWindow.class);
     }
 }
