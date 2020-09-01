@@ -6,11 +6,11 @@ import static ticTacToe.logic.State.*;
  *
  * @author Jere
  */
-public class Squares {
+public class Square {
 
     private State squareState;
 
-    public Squares() {
+    public Square() {
         this.squareState = UNMARKED;
     }
 
