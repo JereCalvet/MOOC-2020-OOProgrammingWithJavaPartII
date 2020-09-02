@@ -16,7 +16,7 @@ public class ShanghaiApplication extends Application {
     }
 
     private Map<Integer, Integer> loadData() {
-        Map<Integer, Integer> data = new HashMap<>();
+        Map<Integer, Integer> data = new HashMap<>();        
         data.put(2007, 73);
         data.put(2008, 68);
         data.put(2009, 72);
@@ -28,29 +28,26 @@ public class ShanghaiApplication extends Application {
         data.put(2015, 67);
         data.put(2016, 56);
         data.put(2017, 56);
-        
+
         return data;
     }
     
     @Override
     public void start(Stage window) throws Exception {
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
+        NumberAxis xAxis = new NumberAxis(2005, 2019, 2);
+        NumberAxis yAxis = new NumberAxis(0, 100, 10);
         
         xAxis.setLabel("Year");
         yAxis.setLabel("Ranking");
 
         LineChart<Number, Number> graphic = new LineChart<>(xAxis, yAxis);
         graphic.setTitle("University of Helsinki, Shangai ranking");
-
-        XYChart.Series rankingData = new XYChart.Series();
-        //rankingData.getData().add(new XYChart.Data<>(3,4));
-        rankingData.setName("Shangai ranking");
         
-         values = rankingData;
+        XYChart.Series rankingData = new XYChart.Series();
+        rankingData.setName("Shangai ranking");
+        loadData().entrySet().stream().forEach(valuePair -> rankingData.getData().add(new XYChart.Data(valuePair.getKey(),valuePair.getValue())));
         
         graphic.getData().add(rankingData);
-        
         
         window.setScene(new Scene(graphic, 800, 600));
         window.setTitle("International universities ranking");
