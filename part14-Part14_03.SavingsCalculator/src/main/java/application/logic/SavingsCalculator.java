@@ -15,7 +15,7 @@ public class SavingsCalculator {
     Map<Integer, Double> nextYearsAmountWithRates;
 
     public SavingsCalculator() {
-        monthlySavings = 0.0;
+        monthlySavings = 25.0;
         yearlyInterestRate = 0.0;
         nextYearsAmountNoRates = new HashMap<>();
         nextYearsAmountWithRates = new HashMap<>();
@@ -59,9 +59,5 @@ public class SavingsCalculator {
             currentAmount = (savedInAYear + currentAmount) * (yearlyInterestRate + 1);
             nextYearsAmountWithRates.put(years, currentAmount);
         }
-    }
-
-    public void test() {
-        nextYearsAmountWithRates.entrySet().stream().forEach(entry -> System.out.println("Year: " + entry.getKey() + " Amount: " + entry.getValue()));
     }
 }
