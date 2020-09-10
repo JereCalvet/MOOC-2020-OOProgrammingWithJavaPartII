@@ -151,6 +151,52 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>java14</id>
+            <activation>
+                <jdk>14</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>14</maven.compiler.source>
+                <maven.compiler.target>14</maven.compiler.target>
+            </properties>
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-base</artifactId>
+                    <version>16-ea+1</version>
+                </dependency>
+
+                <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>16-ea+1</version>
+                </dependency>
+
+                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-12.0.1+2</version>
+                    <scope>test</scope>
+                </dependency>
+
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openjfx</groupId>
+                        <artifactId>javafx-maven-plugin</artifactId>
+                        <version>0.0.2</version>
+                        <configuration>
+                            <mainClass>application.SavingsCalculatorApplication</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>   
 
     <repositories>
