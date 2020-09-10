@@ -38,7 +38,7 @@ public class SavingsCalculatorApplication extends Application {
     private void generateDataAnualInterestRate(Double monthlySavings, Double anualInterestRate) {
         if (calculatorLogic.getMonthlySavings() != monthlySavings) {
             calculatorLogic.setMonthlySavings(monthlySavings);
-            calculatorLogic.calculateYearlyAmountNoRates();    
+            calculatorLogic.calculateYearlyAmountNoRates();
         }
         calculatorLogic.setYearlyInterestRate(anualInterestRate);
         calculatorLogic.calculateYearlyAmountWithRates();
@@ -74,10 +74,10 @@ public class SavingsCalculatorApplication extends Application {
         return graphic;
     }
 
-    private void updateGraphic(LineChart<Number, Number> graphic, XYChart.Series montlySavings, XYChart.Series anualInterestRate) {
+    private LineChart<Number, Number> updateGraphic(LineChart<Number, Number> graphic, XYChart.Series montlySavings, XYChart.Series anualInterestRate) {
         Double maxValueForTheYAxis = calculatorLogic.getNextYearsAmountWithRates().values().stream().max(Comparator.comparing(Double::doubleValue)).orElse(0.0);
         NumberAxis xAxis = new NumberAxis(0, 30, 1);
-        NumberAxis yAxis = new NumberAxis(0, maxValueForTheYAxis, 2500);
+        NumberAxis yAxis = new NumberAxis(0, maxValueForTheYAxis, maxValueForTheYAxis / 10);
         xAxis.setLabel("Years");
         yAxis.setLabel("Savings");
 
@@ -87,6 +87,7 @@ public class SavingsCalculatorApplication extends Application {
         graphic.getData().clear();
         graphic.getData().add(montlySavings);
         graphic.getData().add(anualInterestRate);
+        return graphic;
     }
 
     public static void main(String[] args) {
@@ -100,6 +101,7 @@ public class SavingsCalculatorApplication extends Application {
         mainLayout.setCenter(graphic);
 
         VBox dragSliders = new VBox();
+
         BorderPane monthlySavingsLayout = new BorderPane();
         monthlySavingsLayout.setPadding(new Insets(20, 20, 20, 20));
         Label monthlySavingAmountDisplayLabel = new Label("25.0");
@@ -112,8 +114,7 @@ public class SavingsCalculatorApplication extends Application {
         monthlySavingSlider.valueProperty().addListener((changed, oldValue, newValue) -> monthlySavingAmountDisplayLabel.setText(roundDouble(newValue.doubleValue())));
         monthlySavingSlider.setOnMouseReleased(dragOver -> {
             generateDataMonthlySavings(monthlySavingSlider.getValue());
-            updateGraphic(graphic, transformDataIntoGraphicDataMonthlySavings(), transformDataIntoGraphicDataAnualInterestRate());
-            mainLayout.setCenter(graphic);
+            mainLayout.setCenter(updateGraphic(graphic, transformDataIntoGraphicDataMonthlySavings(), transformDataIntoGraphicDataAnualInterestRate()));
         });
 
         BorderPane anualInterestRateLayout = new BorderPane();
@@ -126,9 +127,10 @@ public class SavingsCalculatorApplication extends Application {
         anualInterestRateLayout.setCenter(anualInterestRateSlider);
         anualInterestRateLayout.setRight(anualInterestRateAmountDisplayLabel);
         anualInterestRateSlider.valueProperty().addListener((changed, oldValue, newValue) -> anualInterestRateAmountDisplayLabel.setText(roundDouble(newValue.doubleValue())));
-        //anualInterestRateSlider.setOnMouseReleased(dragOver -> {calculatorLogic.setMonthlySavings(monthlySavingSlider.getValue()); //Double.valueOf(roundDouble(
-        //                                                        calculatorLogic.setYearlyInterestRate(anualInterestRateSlider.getValue()); //Double.valueOf(roundDouble(
-        //});
+        anualInterestRateSlider.setOnMouseReleased(dragOver -> {
+            generateDataAnualInterestRate(monthlySavingSlider.getValue(), anualInterestRateSlider.getValue());
+            mainLayout.setCenter(updateGraphic(graphic, transformDataIntoGraphicDataMonthlySavings(), transformDataIntoGraphicDataAnualInterestRate()));
+        });
 
         dragSliders.getChildren().add(monthlySavingsLayout);
         dragSliders.getChildren().add(anualInterestRateLayout);
@@ -136,7 +138,7 @@ public class SavingsCalculatorApplication extends Application {
         mainLayout.setTop(dragSliders);
 
         window.setTitle("Savings calculator application");
-        window.setScene(new Scene(mainLayout, 800, 600));
+        window.setScene(new Scene(mainLayout, 800, 600)); //change resolution (smaller) to pass test in server side
         window.show();
     }
 }

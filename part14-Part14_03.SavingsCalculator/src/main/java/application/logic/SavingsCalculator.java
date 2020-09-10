@@ -16,7 +16,7 @@ public class SavingsCalculator {
 
     public SavingsCalculator() {
         monthlySavings = 25.0;
-        yearlyInterestRate = 3.0;
+        yearlyInterestRate = 0.0;
         nextYearsAmountNoRates = new HashMap<>();
         nextYearsAmountWithRates = new HashMap<>();
     }
@@ -46,6 +46,7 @@ public class SavingsCalculator {
     }
 
     public void calculateYearlyAmountNoRates() {
+        nextYearsAmountNoRates.put(0, 0.0);
         for (int years = 1; years <= 30; years++) {
             nextYearsAmountNoRates.put(years, monthlySavings * years * 12);
         }
@@ -54,14 +55,10 @@ public class SavingsCalculator {
     public void calculateYearlyAmountWithRates() {
         Double savedInAYear = monthlySavings * 12;
         Double currentAmount = 0.0;       
-                 
+        nextYearsAmountWithRates.put(0, 0.0);         
         for (int years = 1; years <= 30; years++) {
             currentAmount = (savedInAYear + currentAmount) * (yearlyInterestRate + 1);
             nextYearsAmountWithRates.put(years, currentAmount);
         }
     }
-    
-//    public void test() {
-//        nextYearsAmountNoRates.entrySet().stream().forEach(entry -> System.out.println("Year: " + entry.getKey() + " Amount: " + entry.getValue()));
-//    }
 }
