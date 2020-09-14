@@ -14,76 +14,38 @@ import javafx.stage.Stage;
 
 public class CollageApplication extends Application {
 
-    private ImageView createSmallerImage() {
-        Image sourceImage = new Image("file:monalisa.png");
-
-        PixelReader imageReader = sourceImage.getPixelReader();
-
-        int width = (int) (sourceImage.getWidth() / 2);
-        int height = (int) (sourceImage.getHeight() / 2);
-
-        WritableImage targetImage = new WritableImage(width, height);
-        PixelWriter imageWriter = targetImage.getPixelWriter();
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Color color = imageReader.getColor(x*2, y*2);
-                double red = color.getRed();
-                double green = color.getGreen();
-                double blue = color.getBlue();
-                double opacity = color.getOpacity();
-
-                Color newColor = new Color(red, green, blue, opacity);
-
-                imageWriter.setColor(x, y, newColor);
-            }
-        }
-        
-        return new ImageView(targetImage);
-    }
-
     @Override
     public void start(Stage stage) {
 
-        // the example opens the image, creates a new image, and copies the opened image
-        // into the new one, pixel by pixel
         Image sourceImage = new Image("file:monalisa.png");
-
         PixelReader imageReader = sourceImage.getPixelReader();
 
-        int width = (int) sourceImage.getWidth();
-        int height = (int) sourceImage.getHeight();
+        int originalWidth = (int) sourceImage.getWidth();
+        int originalHeight = (int) sourceImage.getHeight();
+        int smallerWidth = (int) (sourceImage.getWidth() / 2);
+        int smallerHeight = (int) (sourceImage.getHeight() / 2);
 
-        WritableImage targetImage = new WritableImage(width, height);
+        WritableImage targetImage = new WritableImage(originalWidth, originalHeight);
         PixelWriter imageWriter = targetImage.getPixelWriter();
 
-        int yCoordinate = 0;
-        while (yCoordinate < height) {
-            int xCoordinate = 0;
-            while (xCoordinate < width) {
+        for (int y = 0; y < smallerHeight; y++) {
+            for (int x = 0; x < smallerWidth; x++) {
+                Color color = imageReader.getColor(x * 2, y * 2);
 
-                Color color = imageReader.getColor(xCoordinate, yCoordinate);
-                double red = color.getRed();
-                double green = color.getGreen();
-                double blue = color.getBlue();
-                double opacity = color.getOpacity();
+                Color negativeColor = applyNegativeEffect(color);
 
-                Color newColor = new Color(red, green, blue, opacity);
-
-                imageWriter.setColor(xCoordinate, yCoordinate, newColor);
-
-                xCoordinate++;
+                imageWriter.setColor(x, y, negativeColor);
+                imageWriter.setColor((x + smallerWidth), y, negativeColor);
+                imageWriter.setColor(x, (y + smallerHeight), negativeColor);
+                imageWriter.setColor((x + smallerWidth), (y + smallerHeight), negativeColor);
             }
-
-            yCoordinate++;
         }
 
         ImageView image = new ImageView(targetImage);
 
         Pane pane = new Pane();
         pane.getChildren().add(image);
-        pane.getChildren().add(createSmallerImage());
-        
+
         stage.setScene(new Scene(pane));
         stage.show();
     }
@@ -92,4 +54,12 @@ public class CollageApplication extends Application {
         launch(args);
     }
 
+    private Color applyNegativeEffect(Color colorToChange) {
+        double red = 1.0 - colorToChange.getRed();
+        double green = 1.0 - colorToChange.getGreen();
+        double blue = 1.0 - colorToChange.getBlue();
+        double opacity = colorToChange.getOpacity();
+        
+        return new Color(red, green, blue, opacity);
+    }
 }
